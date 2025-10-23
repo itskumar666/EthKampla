@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-});
+// Initialize OpenAI only if API key is available
+const openai = process.env.NEXT_PUBLIC_OPENAI_API_KEY 
+  ? new OpenAI({
+      apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+    })
+  : null;
 
 const SYSTEM_PROMPT = `You are a helpful financial assistant for MicroSave AI, a micro-savings platform for African communities built on Base blockchain.
 
@@ -28,9 +31,9 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    if (!process.env.NEXT_PUBLIC_OPENAI_API_KEY) {
+    if (!openai || !process.env.NEXT_PUBLIC_OPENAI_API_KEY) {
       return NextResponse.json(
-        { message: '⚠️ OpenAI API key not configured. Please add it to .env.local file.' },
+        { message: '⚠️ OpenAI API key not configured. Please add it to environment variables.' },
         { status: 200 }
       );
     }
