@@ -75,7 +75,7 @@ export default function CreatePoolForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Community Emergency Fund"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 required
               />
             </div>
@@ -90,7 +90,7 @@ export default function CreatePoolForm() {
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
                 placeholder="0.1"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 required
               />
             </div>
@@ -105,7 +105,7 @@ export default function CreatePoolForm() {
                 value={contribution}
                 onChange={(e) => setContribution(e.target.value)}
                 placeholder="0.01"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 required
               />
             </div>
@@ -119,7 +119,7 @@ export default function CreatePoolForm() {
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
                 placeholder="30"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 required
               />
             </div>
