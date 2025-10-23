@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther } from 'viem';
 import { SAVINGS_POOL_ABI, CONTRACT_ADDRESS } from '@/lib/contract';
@@ -13,7 +13,7 @@ export default function CreatePoolForm() {
   const [duration, setDuration] = useState('');
   const [showForm, setShowForm] = useState(false);
 
-  const { writeContract, data: hash, isPending } = useWriteContract();
+  const { writeContract, data: hash, isPending, reset } = useWriteContract();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -41,15 +41,19 @@ export default function CreatePoolForm() {
     }
   };
 
-  if (isSuccess) {
-    setTimeout(() => {
-      setShowForm(false);
-      setName('');
-      setTarget('');
-      setContribution('');
-      setDuration('');
-    }, 2000);
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setShowForm(false);
+        setName('');
+        setTarget('');
+        setContribution('');
+        setDuration('');
+        reset(); // Reset the transaction state
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, reset]);
 
   return (
     <div>

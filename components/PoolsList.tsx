@@ -1,10 +1,10 @@
 'use client';
 
-import { useReadContract, useWriteContract, useAccount } from 'wagmi';
+import { useReadContract, useWriteContract, useAccount, useWaitForTransactionReceipt } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
 import { SAVINGS_POOL_ABI, CONTRACT_ADDRESS } from '@/lib/contract';
 import { Users, Target, TrendingUp, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Pool {
   name: string;
@@ -26,7 +26,18 @@ export default function PoolsList() {
     functionName: 'getPoolCount',
   });
 
-  const { writeContract, isPending } = useWriteContract();
+  const { writeContract, isPending, data: hash, reset } = useWriteContract();
+  const { isSuccess } = useWaitForTransactionReceipt({ hash });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setContributingTo(null);
+        reset(); // Reset transaction state
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, reset]);
 
   const handleContribute = (poolId: number, amount: bigint) => {
     setContributingTo(poolId);
